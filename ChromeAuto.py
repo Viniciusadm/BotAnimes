@@ -1,6 +1,5 @@
 from selenium.webdriver.support.select import Select
 from selenium import webdriver
-from time import sleep
 from random import choice, randint
 from os import listdir, system
 from urllib.request import urlretrieve
@@ -71,6 +70,13 @@ class ChromeAuto:
             return text
         except:
             return ''
+
+    def click_by_xpath(self, element):
+        btn = self.chrome.find_element_by_xpath(element)
+        btn.click()
+
+    def back_page(self, page):
+        self.chrome.switch_to_window(self.chrome.window_handles[page])
 
     def get_atrib_xpath(self, element):
         try:
