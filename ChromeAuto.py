@@ -1,8 +1,5 @@
 from selenium.webdriver.support.select import Select
 from selenium import webdriver
-from random import choice, randint
-from os import listdir, system
-from urllib.request import urlretrieve
 
 class ChromeAuto:
     def __init__(self):
@@ -20,7 +17,13 @@ class ChromeAuto:
     def out(self):
         self.chrome.quit()
 
-    def click_select(self, element, item):
+    def back_page(self, page):
+        self.chrome.switch_to_window(self.chrome.window_handles[page])
+    
+    def roll(self, top):
+        self.chrome.execute_script(f"window.scrollTo(0, {top})")
+
+    def click_select_by_id(self, element, item):
         try:
             select_element = self.chrome.find_element_by_id(element)
             select_object = Select(select_element)
@@ -28,41 +31,69 @@ class ChromeAuto:
         except:
             print(f'Erro ao clicar no elemento {item}')
 
-    def click_select_selector(self, element, item):
-        select_element = self.chrome.find_element_by_css_selector(element)
-        select_object = Select(select_element)
-        select_object.select_by_visible_text(item)
-
-    def click_input_id(self, button):
+    def click_select_by_selector(self, element, item):
         try:
-            btn = self.chrome.find_element_by_id(button)
+            select_element = self.chrome.find_element_by_css_selector(element)
+            select_object = Select(select_element)
+            select_object.select_by_visible_text(item)
+        except:
+            print(f'Erro ao clicar no elemento {item}')
+
+    def click_by_id(self, element):
+        try:
+            btn = self.chrome.find_element_by_id(element)
             btn.click()
         except:
-            print(f'Erro ao clicar no elemento {button}')
+            print(f'Erro ao clicar no elemento {element}')
 
-    def click_input_text(self, element):
-        btn = self.chrome.find_element_by_link_text(element)
-        btn.click()
+    def click_by_text(self, element):
+        try:
+            btn = self.chrome.find_element_by_link_text(element)
+            btn.click()
+        except:
+            print(f'Erro ao clicar no elemento {element}')
 
-    def click_input_selector(self, button):
-        btn = self.chrome.find_element_by_css_selector(button)
-        btn.click()
+    def click_by_selector(self, element):
+        try:
+            btn = self.chrome.find_element_by_css_selector(element)
+            btn.click()
+        except:
+            print(f'Erro ao clicar no elemento {element}')
 
-    def add_image(self, input, image):
-        btn = self.chrome.find_element_by_css_selector(input)
-        btn.send_keys(image)
+    def click_by_xpath(self, element):
+        try:
+            btn = self.chrome.find_element_by_xpath(element)
+            btn.click()
+        except:
+            print(f'Erro ao clicar no elemento {element}')
 
-    def write(self, element, text):
-        btn = self.chrome.find_element_by_id(element)
-        btn.send_keys(text)
+    def add_image_by_selector(self, element, image):
+        try:
+            btn = self.chrome.find_element_by_css_selector(element)
+            btn.send_keys(image)
+        except:
+            print(f'Erro ao adicionar a imagem')
 
-    def clear(self, element):
-        btn = self.chrome.find_element_by_id(element)
-        btn.clear()
+    def write_by_id(self, element, text):
+        try:
+            btn = self.chrome.find_element_by_id(element)
+            btn.send_keys(text)
+        except:
+            print(f'Erro ao escrever o texto')
 
-    def get_text(self, element):
-        text = self.chrome.find_element_by_id(element).text
-        return text
+    def clear_by_id(self, element):
+        try:
+            btn = self.chrome.find_element_by_id(element)
+            btn.clear()
+        except:
+            print(f'Erro ao apagar o elemento {element}')
+
+    def get_text_by_id(self, element):
+        try:
+            text = self.chrome.find_element_by_id(element).text
+            return text
+        except:
+            return ''
 
     def get_text_xpath(self, element):
         try:
@@ -71,19 +102,9 @@ class ChromeAuto:
         except:
             return ''
 
-    def click_by_xpath(self, element):
-        btn = self.chrome.find_element_by_xpath(element)
-        btn.click()
-
-    def back_page(self, page):
-        self.chrome.switch_to_window(self.chrome.window_handles[page])
-
-    def get_atrib_xpath(self, element):
+    def get_atrib_by_xpath(self, element, atrib):
         try:
             atrib = self.chrome.find_element_by_xpath(element)
-            return atrib.get_attribute('src')
+            return atrib.get_attribute(atrib)
         except:
             return ''
-
-    def roll(self, top):
-        self.chrome.execute_script(f"window.scrollTo(0, {top})")
