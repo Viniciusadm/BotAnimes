@@ -7,22 +7,18 @@ from Fillers import Fillers
 from SearchAnimes import SearchAnimes
 from Controll import Controll
 
-name = 'Detective Conan'
-# name = input("Digite o nome do anime: ")
+name = input("Digite o nome do anime: ")
 animes = SearchAnimes(name)
 
-# for index, anime in enumerate(animes.get_animes()):
-#     title = anime['title']
-#     print(f'{index} - {title}')
+for index, anime in enumerate(animes.get_animes()):
+    title = anime['title']
+    print(f'{index} - {title}')
 
-number_anime = 0
-# number_anime = int(input("Digite o numero do anime: "))
+number_anime = int(input("Digite o numero do anime: "))
 animes.set_anime(animes.get_animes()[number_anime])
 
-current = 713
-quantity = 2
-# current = int(input("Digite o primeiro episodio: "))
-# quantity = int(input("Digite a quantidade de episodios: "))
+current = int(input("Digite o primeiro episodio: "))
+quantity = int(input("Digite a quantidade de episodios: "))
 
 fillers = Fillers(animes.get_anime()['title']).get_fillers()
 
@@ -52,7 +48,7 @@ for i in range(0, quantity):
     chrome.click_by_xpath('/html/body/div/header/div/div/button')
     chrome.back_page(0)
     chrome.click_by_xpath('/html/body/div/header/div/div/a')
-    sleep(120)
+    sleep(180)
 
     currentContext = Controll.nextEpisode(fillers, currentContext)
 
@@ -61,7 +57,7 @@ list_episodes = files.check_downloaded()
 currentContext = Controll().nextEpisode(fillers, current)
 
 for episode in list_episodes:
-    sleep(0.5)
+    sleep(1)
     if len(str(currentContext)) == 1:
        currentContext = '0' + str(currentContext)
     

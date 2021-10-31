@@ -32,7 +32,7 @@ class Files:
         self.files_list = files_list[:self.quantity]
     
     def move_file(self, file, name, episode) -> str:
-        path = f'{self.new_path}/{name} {episode}'
+        path = f'{self.new_path}/{name} {episode}.mp4'
         if self.checkFile(file):
             os.rename(f'{self.old_path}/{file}', path)
         return path
@@ -42,7 +42,7 @@ class Files:
         for file in self.files_list:
             if file[-10:] == 'crdownload':
                 print(f'{file} ainda está sendo baixado')
-                sleep(10)
+                sleep(20)
                 self.create_list_files()
                 self.check_downloaded()
         return self.files_list
