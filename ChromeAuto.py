@@ -108,3 +108,18 @@ class ChromeAuto:
             return atrib.get_attribute(atrib)
         except:
             return ''
+
+    def get_element_by_text(self, text):
+        try:
+            element = self.chrome.find_element_by_link_text(text)
+            return element
+        except:
+            return ''
+
+    def check_exists_by_text(self, text):
+        try:
+            self.chrome.find_element_by_link_text(text)
+        except:
+            return False
+        return True
+            
