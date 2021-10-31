@@ -31,8 +31,8 @@ else:
     for index, anime in enumerate(animes.get_animes()):
         title = anime['title']
         print(f'{index} - {title}')
-        number_anime = int(input("Digite o numero do anime: "))
-        animes.set_anime(animes.get_animes()[number_anime])
+    number_anime = int(input("Digite o numero do anime: "))
+    animes.set_anime(animes.get_animes()[number_anime])
 
 current = int(input("Digite o episodio atual: "))
 quantity = int(input("Digite a quantidade de episodios: "))
