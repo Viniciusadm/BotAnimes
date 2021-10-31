@@ -7,7 +7,11 @@ from Fillers import Fillers
 from SearchAnimes import SearchAnimes
 from Controll import Controll
 from Favorites import Favorites
+from Config import Config
+# Meus enums
+from Qualities import Qualities
 
+config = Config()
 favorites = Favorites()
 
 for index, favorite in enumerate(favorites.get_favorites()):
@@ -48,10 +52,20 @@ for i in range(0, quantity):
 
     anime_url = animes.get_anime()['url'] + '/episodio-' + str(currentContext) + '/download'
     chrome.access(anime_url)
-    if chrome.check_exists_by_text('Qualidade HD'):
-        chrome.click_by_text('Qualidade HD')
-    else:
-        chrome.click_by_text('Qualidade SD')
+
+    found = False
+    for qualitiy in Qualities:
+        if qualitiy.value == config.get_config('standard_quality') and found == False:
+            found = True
+            if chrome.check_exists_by_text(qualitiy.value):
+                chrome.click_by_text(qualitiy.value)
+                break
+            else:
+                continue
+        else:
+            if chrome.check_exists_by_text(qualitiy.value):
+                chrome.click_by_text(qualitiy.value)
+                break
     
     # Verifica se não deu erro de segurança no Chrome
     if chrome.check_exists_by_text('Avançado'):
