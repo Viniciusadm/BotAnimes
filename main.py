@@ -6,18 +6,31 @@ from Files import Files
 from Fillers import Fillers
 from SearchAnimes import SearchAnimes
 from Controll import Controll
+from Favorites import Favorites
 
-name = input("Digite o nome do anime: ")
-animes = SearchAnimes(name)
+favorites = Favorites()
 
-for index, anime in enumerate(animes.get_animes()):
-    title = anime['title']
-    print(f'{index} - {title}')
+for index, favorite in enumerate(favorites.get_favorites()):
+    print(str(index) + ' - ' + favorite['title'])
+else:
+    print(str(index + 1) + ' - Buscar um novo anime')
 
-number_anime = int(input("Digite o numero do anime: "))
-animes.set_anime(animes.get_animes()[number_anime])
+number = int(input('Digite a opção escolhida: '))
 
-current = int(input("Digite o primeiro episodio: "))
+animes = SearchAnimes()
+if number < len(favorites.get_favorites()):
+    animes.set_anime(favorites.get_favorites()[number])
+else:
+    name = input("Digite o nome do anime: ")
+    animes.search_anime(name)
+
+    for index, anime in enumerate(animes.get_animes()):
+        title = anime['title']
+        print(f'{index} - {title}')
+        number_anime = int(input("Digite o numero do anime: "))
+        animes.set_anime(animes.get_animes()[number_anime])
+
+current = int(input("Digite o episodio atual: "))
 quantity = int(input("Digite a quantidade de episodios: "))
 
 fillers = Fillers(animes.get_anime()['title']).get_fillers()
