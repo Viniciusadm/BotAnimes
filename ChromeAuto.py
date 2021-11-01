@@ -104,8 +104,15 @@ class ChromeAuto:
 
     def get_atrib_by_xpath(self, element, atrib):
         try:
-            atrib = self.chrome.find_element_by_xpath(element)
-            return atrib.get_attribute(atrib)
+            tag = self.chrome.find_element_by_xpath(element)
+            return tag.get_attribute(atrib)
+        except:
+            return ''
+
+    def get_atrib_by_tag(self, element, atrib) -> str:
+        try:
+            tag = self.chrome.find_element_by_tag_name(element)
+            return tag.get_attribute(atrib)
         except:
             return ''
 
@@ -119,6 +126,13 @@ class ChromeAuto:
     def check_exists_by_text(self, text):
         try:
             self.chrome.find_element_by_link_text(text)
+        except:
+            return False
+        return True
+
+    def check_exists_by_tag(self, tag):
+        try:
+            self.chrome.find_element_by_tag_name(tag)
         except:
             return False
         return True
