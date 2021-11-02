@@ -17,5 +17,8 @@ class SearchAnimes:
     def set_anime(self, anime) -> None:
         self.anime = anime
 
-    def get_anime(self) -> list:
-        return self.anime
+    def get_anime(self, key) -> list:
+        return self.anime[key]
+
+    def set_name(self, name) -> None:
+        self.anime['title'] = name

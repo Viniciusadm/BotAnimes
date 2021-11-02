@@ -11,5 +11,7 @@ class Download:
         self.download()
 
     def download(self) -> str:
-        urllib.request.urlretrieve(self.url, self.path + self.title + '/' + self.title_file)
-        return f'{self.title_file} baixado com sucesso!'
+        try:
+            urllib.request.urlretrieve(self.url, self.path + self.title + '/' + self.title_file)
+        except Exception:
+            print(f'Erro ao baixar {self.title_file}')

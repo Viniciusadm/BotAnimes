@@ -28,22 +28,25 @@ else:
     number_anime = int(input("Digite o numero do anime: "))
     animes.set_anime(animes.get_animes()[number_anime])
 
+if animes.get_anime('title')[-10:] == ' - Dublado':
+    animes.set_name(animes.get_anime('title')[:-10])
+
 current = int(input("Digite o episodio atual: "))
 quantity = int(input("Digite a quantidade de episodios: "))
 
 # Criação do diretorio
-Controll().create_dir(animes.get_anime()['title'])
+Controll().create_dir(animes.get_anime('title'))
 chrome = ChromeAuto()
 
 # Baixar os episódios
-current = Controll().nextEpisode(animes.get_anime()['title'], current)
+current = Controll().nextEpisode(animes.get_anime('title'), current)
 config = Config()
 
 for i in range(0, quantity):
     if len(str(current)) == 1:
         current = '0' + str(current)
 
-    anime_url = animes.get_anime()['url'] + '/episodio-' + str(current) + '/download'
+    anime_url = animes.get_anime('url') + '/episodio-' + str(current) + '/download'
     chrome.access(anime_url)
 
     found = False
@@ -56,7 +59,7 @@ for i in range(0, quantity):
             else:
                 continue
         else:
-            if chrome.check_exists_by_text(qualitiy.value):
+            if chrome.check_exists_by_text(qualitiy.value) and found == True:
                 chrome.click_by_text(qualitiy.value)
                 break
     
@@ -69,7 +72,7 @@ for i in range(0, quantity):
     chrome.back_page(0)
     url = chrome.get_atrib_by_xpath('/html/body/div/header/div/div/a', 'href')
     
-    name_anime = animes.get_anime()['title']
+    name_anime = animes.get_anime('title')
 
     if len(str(current)) == 1:
        current = '0' + str(current)
